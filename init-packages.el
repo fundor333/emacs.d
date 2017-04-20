@@ -18,7 +18,7 @@
 
 ; list the packages you want
 (setq package-list
-    '(magit))
+    '(magit easy-hugo python dracula-theme))
 
 
 ; activate all the packages
