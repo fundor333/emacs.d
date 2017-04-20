@@ -1,50 +1,31 @@
-# Gitignore for my personal EMACS .emacs.d
-
-/url/cache
-/.emacs.desktop
-/auto-save-list
-/.session
-/session.*
-/custom.el
+#emacs byte compiled files
 *.elc
-CVS
-.svn
+
+# emacs temp files
 *~
-.cvsignore
-.*.lock
+.#*
+ac-comphist.dat
+ido.last
+recentf
+
+# the package repository
+elpa/
+
+# session information
+.mc-lists.el
+.smex-items
+nrepl-history
+cider-history
+auto-save-list/
+emacs.frameg
+.emacs.desktop
+.emacs.desktop.lock
+eshell
+
+# projectile
+projectile-bookmarks.eld
+
+# osx stuff
+.DS_Store
 /tramp
-/TODO
-/anything-c-adaptive-history
-/.org-id-locations
-cookies
-/newsticker
-/ac-comphist.dat
-\#*
-/elpa
-/elpa-*
-site-lisp/package/
-/swank
-/.mc-lists.el
-/var
-/.sqli_history
-/frame-restore-parameters
-/.achievements
-/.bookmarks.el
-/history
-/helm-adaptive-history
-/thumbs/
-/emms/
-/.smex-items
-/image-dired/
-/eshell
-/.cask/
-/.sx/
-/org-clock-save.el
-/ditaa*.jar
-/ido.last
-/recentf
-/viper
-/projectile-bookmarks.eld
-/anaconda-mode/
-/.historian
-/.uptimes.el
+
