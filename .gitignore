@@ -21,6 +21,7 @@ emacs.frameg
 .emacs.desktop
 .emacs.desktop.lock
 eshell
+games/
 
 # projectile
 projectile-bookmarks.eld
