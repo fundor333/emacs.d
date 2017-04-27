@@ -18,7 +18,7 @@
 
 ; list the packages you want
 (setq package-list
-    '(magit easy-hugo python dracula-theme))
+      '(magit easy-hugo python dracula-theme jedi helm helm-projectile pdf-tools less-css-mode emojify))
 
 
 ; activate all the packages
@@ -32,3 +32,8 @@
 (dolist (package package-list)
   (unless (package-installed-p package)
     (package-install package)))
+
+(when (< emacs-major-version 24)
+  ;; For important compatibility libraries like cl-lib
+  (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/")))
+(package-initialize)
