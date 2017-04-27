@@ -18,7 +18,7 @@
 
 ; list the packages you want
 (setq package-list
-    '(magit easy-hugo python dracula-theme jedi helm helm-projectile))
+      '(magit easy-hugo python dracula-theme jedi helm helm-projectile pdf-tools less-css-mode emojify))
 
 
 ; activate all the packages
