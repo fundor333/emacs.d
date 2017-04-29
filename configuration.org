@@ -1,0 +1,335 @@
+#+TITLE: Emacs configuration
+
+My personal Emacs config. Some of the stuff pasted from [[https://github.com/hrs/dotfiles][this repository]]
+
+* Set personal information
+
+#+BEGIN_SRC emacs-lisp
+  (setq user-full-name "Matteo Scarpa"
+        user-mail-address "fundor333@gmail.com"
+        calendar-latitude 43.4
+        calendar-longitude 12.3
+        calendar-location-name "Venice, IT")
+#+END_SRC
+
+* Add =resources= to =load-path=
+
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'load-path "~/.emacs.d/resources/")
+  (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+#+END_SRC
+
+* Package management
+
+#+BEGIN_SRC emacs-lisp
+  (require 'package)
+  (add-to-list 'package-archives
+               '("melpa-stable" . "http://melpa-stable.milkbox.net/packages/") t)
+
+  (add-to-list 'package-archives
+  	     '("melpa" . "https://melpa.org/package/")t)
+#+END_SRC
+
+** Package stuff
+
+Some functions and other to install and update the packages
+
+*** Adding the packages you want
+
+Here add all the packages you want install
+
+#+BEGIN_SRC emacs-lisp
+  (setq package-list
+        '(magit easy-hugo python dracula-theme jedi helm helm-projectile
+  	      pdf-tools less-css-mode emojify markdown-mode org-bullets))
+
+#+END_SRC
+
+*** Activete all the packages
+
+#+BEGIN_SRC emacs-lisp
+  (package-initialize)
+#+END_SRC
+
+*** Fetch the list of all the packages available
+
+#+BEGIN_SRC emacs-lisp
+  (unless package-archive-contents
+    (package-refresh-contents))
+#+END_SRC
+
+***Install what is missing
+
+Adding all the missing packages
+
+#+BEGIN_SRC emacs-lisp
+  (dolist (package package-list)
+    (unless (package-installed-p package)
+      (package-install package)))
+
+#+END_SRC
+
+* Theme configs
+
+#+BEGIN_SRC emacs-lisp
+  (custom-set-variables
+   '(custom-enabled-themes (quote (dracula)))
+   '(custom-safe-themes
+     (quote
+      ("b97a01622103266c1a26a032567e02d920b2c697ff69d40b7d9956821ab666cc" default))))
+  (custom-set-faces
+   )
+  (add-hook 'after-init-hook #'global-emojify-mode)
+
+#+END_SRC
+
+* Programming customizations
+
+** Python
+
+Indent 2 spaces.
+
+#+BEGIN_SRC emacs-lisp
+  (setq python-indent 4)
+
+#+END_SRC
+
+* Publishing and task management with Org-mode
+
+** Display preferences
+
+Pretty pretty bullets instead of a list of asterisks.
+
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'org-mode-hook
+            (lambda ()
+              (org-bullets-mode t)))
+#+END_SRC
+
+Arrow instead of  ellipsis
+
+#+BEGIN_SRC emacs-lisp
+  (setq org-ellipsis "⤵")
+#+END_SRC
+
+** Task and org-capture management
+
+Store my org files in =~/org=, maintain an inbox in Dropbox, define the location
+of an index file (my main todo list), and archive finished tasks in
+=~/org/archive.org=.
+
+#+BEGIN_SRC emacs-lisp
+  (setq org-directory "~/org")
+
+  (defun org-file-path (filename)
+    "Return the absolute address of an org file, given its relative name."
+    (concat (file-name-as-directory org-directory) filename))
+
+  (setq org-inbox-file "~/Dropbox/Org/inbox.org")
+  (setq org-index-file (org-file-path "index.org"))
+  (setq org-archive-location
+        (concat (org-file-path "archive.org") "::* From %s"))
+#+END_SRC
+
+I use [[http://agiletortoise.com/drafts/][Drafts]] to create new tasks, format them according to a template, and
+append them to an "inbox.org" file in my Dropbox. This function lets me import
+them easily from that inbox file to my index.
+
+#+BEGIN_SRC emacs-lisp
+  (defun hrs/copy-tasks-from-inbox ()
+    (when (file-exists-p org-inbox-file)
+      (save-excursion
+        (find-file org-index-file)
+        (goto-char (point-max))
+        (insert-file-contents org-inbox-file)
+        (delete-file org-inbox-file))))
+#+END_SRC
+
+I store all my todos in =~/org/index.org=, so I'd like to derive my agenda from
+there.
+
+#+BEGIN_SRC emacs-lisp
+  (setq org-agenda-files (list org-index-file))
+#+END_SRC
+
+Hitting =C-c C-x C-s= will mark a todo as done and move it to an appropriate
+place in the archive.
+
+#+BEGIN_SRC emacs-lisp
+  (defun hrs/mark-done-and-archive ()
+    "Mark the state of an org-mode item as DONE and archive it."
+    (interactive)
+    (org-todo 'done)
+    (org-archive-subtree))
+
+  (define-key org-mode-map (kbd "C-c C-x C-s") 'hrs/mark-done-and-archive)
+#+END_SRC
+
+Record the time that a todo was archived.
+
+#+BEGIN_SRC emacs-lisp
+  (setq org-log-done 'time)
+#+END_SRC
+
+**** Capturing tasks
+
+Define a few common tasks as capture templates. Specifically, I frequently:
+
+- Record ideas for future blog posts in =~/org/blog-ideas.org=,
+- Keep a running grocery list in =~/org/groceries.org=, and
+- Maintain a todo list in =~/org/index.org=.
+
+#+BEGIN_SRC emacs-lisp
+  (setq org-capture-templates
+        '(("b" "Blog idea"
+           entry
+           (file (org-file-path "blog-ideas.org"))
+           "* TODO %?\n")
+
+          ("g" "Groceries"
+           checkitem
+           (file (org-file-path "groceries.org")))
+
+          ("l" "Today I Learned..."
+           entry
+           (file+datetree (org-file-path "til.org"))
+           "* %?\n")
+
+          ("r" "Reading"
+           checkitem
+           (file (org-file-path "to-read.org")))
+
+          ("t" "Todo"
+           entry
+           (file+headline org-index-file "Inbox")
+           "* TODO %?\n")))
+#+END_SRC
+
+When I'm starting an org capture template I'd like to begin in insert mode. I'm
+opening it up in order to start typing something, so this skips a step.
+
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'org-capture-mode-hook 'evil-insert-state)
+#+END_SRC
+
+**** Keybindings
+
+Hit =C-c i= to quickly open up my todo list.
+
+#+BEGIN_SRC emacs-lisp
+  (defun open-index-file ()
+    "Open the master org TODO list."
+    (interactive)
+    (hrs/copy-tasks-from-inbox)
+    (find-file org-index-file)
+    (flycheck-mode -1)
+    (end-of-buffer))
+
+  (global-set-key (kbd "C-c i") 'open-index-file)
+#+END_SRC
+
+** Exporting
+
+Allow export to markdown and beamer (for presentations).
+
+#+BEGIN_SRC emacs-lisp
+  (require 'ox-md)
+  (require 'ox-beamer)
+#+END_SRC
+
+Translate regular ol' straight quotes to typographically-correct curly quotes
+when exporting.
+
+#+BEGIN_SRC emacs-lisp
+  (setq org-export-with-smart-quotes t)
+#+END_SRC
+
+**** Exporting to HTML
+
+Don't include a footer with my contact and publishing information at the bottom
+of every exported HTML document.
+
+#+BEGIN_SRC emacs-lisp
+  (setq org-html-postamble nil)
+#+END_SRC
+
+**** Exporting to PDF
+
+I want to produce PDFs with syntax highlighting in the code. The best way to do
+that seems to be with the =minted= package, but that package shells out to
+=pygments= to do the actual work. =pdflatex= usually disallows shell commands;
+this enables that.
+
+#+BEGIN_SRC emacs-lisp
+  (setq org-latex-pdf-process
+        '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+          "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+          "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
+#+END_SRC
+
+Include the =minted= package in all of my LaTeX exports.
+
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'org-latex-packages-alist '("" "minted"))
+  (setq org-latex-listings 'minted)
+#+END_SRC
+
+
+** TeX configuration
+
+I rarely write LaTeX directly any more, but I often export through it with
+org-mode, so I'm keeping them together.
+
+Automatically parse the file after loading it.
+
+#+BEGIN_SRC emacs-lisp
+  (setq TeX-parse-self t)
+#+END_SRC
+
+Always use =pdflatex= when compiling LaTeX documents. I don't really have any
+use for DVIs.
+
+#+BEGIN_SRC emacs-lisp
+  (setq TeX-PDF-mode t)
+#+END_SRC
+
+Enable a minor mode for dealing with math (it adds a few useful keybindings),
+and always treat the current file as the "main" file. That's intentional, since
+I'm usually actually in an org document.
+
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'LaTeX-mode-hook
+            (lambda ()
+              (LaTeX-math-mode)
+              (setq TeX-master t)))
+#+END_SRC
+
+* Daily checklist
+
+There are certain things I want to do every day. I store those in a checklist.
+That's an ERB template wrapping an Org document, since different things happen
+on different days.
+
+Hitting =C-c t= either opens today's existing checklist (if it exists), or
+renders today's new checklist, copies it into an Org file in =/tmp=, and opens
+it.
+
+#+BEGIN_SRC emacs-lisp
+  (setq hrs/checklist-template "~/documents/daily-checklist.org.erb")
+
+  (defun hrs/today-checklist-filename ()
+    "The filename of today's checklist."
+    (concat "/tmp/daily-checklist-" (format-time-string "%Y-%m-%d") ".org"))
+
+  (defun hrs/today ()
+    "Take a look at today's checklist."
+    (interactive)
+    (let ((filename (hrs/today-checklist-filename)))
+      (if (file-exists-p filename)
+          (find-file filename)
+        (progn
+          (shell-command (concat "erb " hrs/checklist-template " > " filename))
+          (find-file filename)))))
+
+  (global-set-key (kbd "C-c t") 'hrs/today)
+#+END_SRC
