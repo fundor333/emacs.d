@@ -1,84 +1,12 @@
-### Emacs ###
-# -*- mode: gitignore; -*-
-*~
-\#*\#
-/.emacs.desktop
-/.emacs.desktop.lock
-*.elc
-auto-save-list
-tramp
-.\#*
-
-# Org-mode
-.org-id-locations
-*_archive
-
-# flymake-mode
-*_flymake.*
-
-# eshell files
-/eshell/history
-/eshell/lastdir
-
-# elpa packages
-/elpa/
-
-# reftex files
-*.rel
-
-# AUCTeX auto folder
-/auto/
-
-# cask packages
-.cask/
-dist/
-
-# Flycheck
-flycheck_*.el
-
-# server auth directory
-/server/
-
-# projectiles files
-.projectile
-
-# directory configuration
-.dir-locals.el
-
-#emacs byte compiled files
-*.elc
-
-# emacs temp files
-*~
-.#*
-ac-comphist.dat
-ido.last
-recentf
-
-# the package repository
+*
+!Cask
+!configuration.org
+!init.el
+!resources
+!snippets
+mutt/temp
 elpa/
-
-# session information
-.mc-lists.el
-.smex-items
-nrepl-history
-cider-history
-auto-save-list/
-emacs.frameg
-.emacs.desktop
-.emacs.desktop.lock
-eshell
-games/
-
-# projectile
-projectile-bookmarks.eld
-
-# osx stuff
-.DS_Store
-/tramp
-
-
 emojis/
-url/
+games/
 session.*
-configuration\.el
+
