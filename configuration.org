@@ -19,6 +19,16 @@ My personal Emacs config. Some of the stuff pasted from [[https://github.com/hrs
   (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 #+END_SRC
 
+* Adding the packages you want
+
+Here add all the packages you want install
+
+#+BEGIN_SRC emacs-lisp
+  (setq package-list  '(magit easy-hugo python dracula-theme jedi helm helm-projectile
+  	      pdf-tools less-css-mode emojify markdown-mode org-bullets auto-complete go-autocomplete
+              go-mode web-mode less-css-mode dockerfile-mode))
+#+END_SRC
+
 * Package management
 
 #+BEGIN_SRC emacs-lisp
@@ -30,20 +40,9 @@ My personal Emacs config. Some of the stuff pasted from [[https://github.com/hrs
   	     '("melpa" . "https://melpa.org/package/")t)
 #+END_SRC
 
-** Package stuff
+** Package Script
 
 Some functions and other to install and update the packages
-
-*** Adding the packages you want
-
-Here add all the packages you want install
-
-#+BEGIN_SRC emacs-lisp
-  (setq package-list
-        '(magit easy-hugo python dracula-theme jedi helm helm-projectile
-  	      pdf-tools less-css-mode emojify markdown-mode org-bullets))
-
-#+END_SRC
 
 *** Activete all the packages
 
@@ -84,6 +83,13 @@ Adding all the missing packages
 #+END_SRC
 
 * Programming customizations
+** GoLang
+
+#+BEGIN_SRC golang
+(require 'go-autocomplete)
+(require 'auto-complete-config)
+(ac-config-default)
+#+END_SRC
 
 ** Python
 
@@ -92,6 +98,12 @@ Indent 2 spaces.
 #+BEGIN_SRC emacs-lisp
   (setq python-indent 4)
 
+#+END_SRC
+
+** Docker
+
+#+BEGIN_SRC emacs-lisp
+   (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode))
 #+END_SRC
 
 * Org-mode
@@ -337,13 +349,13 @@ it.
 
 #+BEGIN_SRC emacs_lisp
 
-  ;;; save & shutdown when we get an "end of session" signal on dbus 
+  ;;; save & shutdown when we get an "end of session" signal on dbus
   (require 'dbus)
-  
+
   (defun my-register-signals (client-path)
   "Register for the 'QueryEndSession' and 'EndSession' signals from
   Gnome SessionManager.
-  
+
   When we receive 'QueryEndSession', we just respond with
   'EndSessionResponse(true, \"\")'.  When we receive 'EndSession', we
   append this EndSessionResponse to kill-emacs-hook, and then call
@@ -365,13 +377,13 @@ it.
   `(lambda (arg)
   (add-hook 'kill-emacs-hook ,end-session-response t)
   (kill-emacs) ) ) ) )
-  
+
   ;; DESKTOP_AUTOSTART_ID is set by the Gnome desktop manager when emacs
   ;; is autostarted.  We can use it to register as a client with gnome
   ;; SessionManager.
   (dbus-call-method-asynchronously
   :session "org.gnome.SessionManager"
-  "/org/gnome/SessionManager" 
+  "/org/gnome/SessionManager"
   "org.gnome.SessionManager" "RegisterClient" 'my-register-signals
  "Emacs server" (getenv "DESKTOP_AUTOSTART_ID"))
 
