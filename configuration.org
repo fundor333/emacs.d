@@ -71,20 +71,6 @@ Adding all the missing packages
 
 #+END_SRC
 
-* Theme configs
-
-#+BEGIN_SRC emacs-lisp
-  (custom-set-variables
-   '(custom-enabled-themes (quote (dracula)))
-   '(custom-safe-themes
-     (quote
-      ("b97a01622103266c1a26a032567e02d920b2c697ff69d40b7d9956821ab666cc" default))))
-  (custom-set-faces
-   )
-  (add-hook 'after-init-hook #'global-emojify-mode)
-
-#+END_SRC
-
 * Programming customizations
 ** GoLang
 
