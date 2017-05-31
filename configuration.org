@@ -26,19 +26,22 @@ Here add all the packages you want install
 #+BEGIN_SRC emacs-lisp
   (setq package-list  '(magit easy-hugo python dracula-theme jedi helm helm-projectile
   	      pdf-tools less-css-mode emojify markdown-mode org-bullets auto-complete go-autocomplete
-              go-mode web-mode less-css-mode dockerfile-mode ruby-mode))
+              go-mode web-mode less-css-mode dockerfile-mode ruby-mode php-mode))
 #+END_SRC
 
 * Package management
 
 #+BEGIN_SRC emacs-lisp
-  (require 'package)
+  (require 'package) ;; You might already have this line
   (add-to-list 'package-archives
-               '("melpa-stable" . "http://melpa-stable.milkbox.net/packages/") t)
-
-  (add-to-list 'package-archives
-  	     '("melpa" . "https://melpa.org/package/")t)
+             '("melpa" . "https://melpa.org/packages/"))
+  (when (< emacs-major-version 24)
+  ;; For important compatibility libraries like cl-lib
+  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
+  (package-initialize) ;; You might already have this line
 #+END_SRC
+
+#+RESULTS:
 
 ** Package Script
 
