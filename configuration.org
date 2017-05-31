@@ -117,6 +117,15 @@ Indent 2 spaces.
    (add-to-list 'auto-mode-alist
        '("\\(?:Brewfile\\|Capfile\\|Gemfile\\(?:\\.[a-zA-Z0-9._-]+\\)?\\|[rR]akefile\\)\\'" . ruby-mode))
 #+END_SRC
+   
+** Web
+
+#+BEGIN_SRC emacs-lisp
+   (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
+   (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
+   (add-to-list 'auto-mode-alist '("\\.html\\.twig\\'" . web-mode))
+   (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+#+END_SRC
 
 * Org-mode
 ** Display preferences
