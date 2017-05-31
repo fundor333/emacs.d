@@ -26,7 +26,7 @@ Here add all the packages you want install
 #+BEGIN_SRC emacs-lisp
   (setq package-list  '(magit easy-hugo python dracula-theme jedi helm helm-projectile
   	      pdf-tools less-css-mode emojify markdown-mode org-bullets auto-complete go-autocomplete
-              go-mode web-mode less-css-mode dockerfile-mode))
+              go-mode web-mode less-css-mode dockerfile-mode ruby-mode))
 #+END_SRC
 
 * Package management
@@ -104,6 +104,15 @@ Indent 2 spaces.
 
 #+BEGIN_SRC emacs-lisp
    (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode))
+#+END_SRC
+
+** Ruby
+
+#+BEGIN_SRC emacs-lisp
+   (add-to-list 'auto-mode-alist
+       '("\\.\\(?:cap\\|gemspec\\|irbrc\\|gemrc\\|rake\\|rb\\|ru\\|thor\\)\\'" . ruby-mode))
+   (add-to-list 'auto-mode-alist
+       '("\\(?:Brewfile\\|Capfile\\|Gemfile\\(?:\\.[a-zA-Z0-9._-]+\\)?\\|[rR]akefile\\)\\'" . ruby-mode))
 #+END_SRC
 
 * Org-mode
