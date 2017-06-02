@@ -32,43 +32,31 @@ Here add all the packages you want install
 * Package management
 
 #+BEGIN_SRC emacs-lisp
-  (require 'package) ;; You might already have this line
-  (add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/"))
-  (when (< emacs-major-version 24)
-  ;; For important compatibility libraries like cl-lib
-  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
-  (package-initialize) ;; You might already have this line
+(setq package-archives '(("elpa" . "http://tromey.com/elpa/")
+                         ("melpa" . "http://melpa.org/packages/")
+                         ("gnu" . "http://elpa.gnu.org/packages/")
+                         ("marmalade" . "http://marmalade-repo.org/packages/")))
+
+; activate all the packages (in particular autoloads)
+(package-initialize)
+
+; fetch the list of packages available 
+(unless package-archive-contents
+  (package-refresh-contents))
+
+; install the missing packages
+(dolist (package package-list)
+  (unless (package-installed-p package)
+    (package-install package)))
 #+END_SRC
 
 #+RESULTS:
 
-** Package Script
-
-Some functions and other to install and update the packages
-
-*** Activete all the packages
+* NeoTree Setup
 
 #+BEGIN_SRC emacs-lisp
-  (package-initialize)
-#+END_SRC
-
-*** Fetch the list of all the packages available
-
-#+BEGIN_SRC emacs-lisp
-  (unless package-archive-contents
-    (package-refresh-contents))
-#+END_SRC
-
-***Install what is missing
-
-Adding all the missing packages
-
-#+BEGIN_SRC emacs-lisp
-  (dolist (package package-list)
-    (unless (package-installed-p package)
-      (package-install package)))
-
+ (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
+ (global-set-key [f8] 'neotree-toggle)
 #+END_SRC
 
 * Programming customizations
@@ -103,7 +91,7 @@ Indent 2 spaces.
    (add-to-list 'auto-mode-alist
        '("\\(?:Brewfile\\|Capfile\\|Gemfile\\(?:\\.[a-zA-Z0-9._-]+\\)?\\|[rR]akefile\\)\\'" . ruby-mode))
 #+END_SRC
-   
+
 ** Web
 
 #+BEGIN_SRC emacs-lisp
