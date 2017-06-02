@@ -4,6 +4,7 @@
 !init.el
 !resources
 !snippets
+!.achievements
 mutt/temp
 elpa/
 emojis/
