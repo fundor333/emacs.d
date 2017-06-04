@@ -1,6 +1,7 @@
-#+TITLE: Emacs configuration
++#+TITLE: Emacs configuration
 
-My personal Emacs config. Some of the stuff pasted from [[https://github.com/hrs/dotfiles][this repository]]
+My personal Emacs config. 
+Some of the stuff pasted from [[https://github.com/hrs/dotfiles][this repository]]
 
 * Set personal information
 
