@@ -128,7 +128,7 @@ of an index file (my main todo list), and archive finished tasks in
 =~/org/archive.org=.
 
 #+BEGIN_SRC emacs-lisp
-  (setq org-directory "~/org")
+  (setq org-directory "~/Dropbox/Org")
 
   (defun org-file-path (filename)
     "Return the absolute address of an org file, given its relative name."
