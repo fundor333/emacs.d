@@ -28,7 +28,7 @@ Here add all the packages you want install
   (setq package-list  '(magit easy-hugo python dracula-theme jedi helm helm-projectile
   	      pdf-tools less-css-mode emojify
           markdown-mode org-bullets auto-complete go-autocomplete
-              go-mode web-mode less-css-mode neotree all-the-icons
+              go-mode web-mode less-css-mode neotree all-the-icons editorconfig
               dockerfile-mode ruby-mode php-mode scss-mode achievements))
 #+END_SRC
 
