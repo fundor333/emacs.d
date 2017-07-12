@@ -25,9 +25,9 @@ Some of the stuff pasted from [[https://github.com/hrs/dotfiles][this repository
 Here add all the packages you want install
 
 #+BEGIN_SRC emacs-lisp
-  (setq package-list  '(python dracula-theme jedi helm helm-projectile
+  (setq package-list  '(python all-the-icons dracula-theme jedi helm helm-projectile
   	      pdf-tools less-css-mode emojify markdown-mode org-bullets auto-complete go-autocomplete
-              go-mode web-mode less-css-mode neotree all-the-icons editorconfig
+              go-mode web-mode less-css-mode neotree editorconfig powerline
               dockerfile-mode ruby-mode php-mode scss-mode achievements))
 #+END_SRC
 
@@ -60,11 +60,23 @@ Here add all the packages you want install
 (add-hook 'after-init-hook #'global-emojify-mode)
 #+END_SRC
 
+* Adding Startup Stuff
+
+#+BEGIN_SRC emacs-lisp
+(global-linum-mode t)
+#+END_SRC
+
 * NeoTree Setup
 
 #+BEGIN_SRC emacs-lisp
  (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
  (global-set-key [f8] 'neotree-toggle)
+#+END_SRC
+
+* Powerline Setup
+
+#+BEGIN_SRC emacs-lisp
+(powerline-default-theme)
 #+END_SRC
 
 * Programming customizations
