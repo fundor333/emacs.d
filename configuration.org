@@ -1,6 +1,6 @@
 +#+TITLE: Emacs configuration
 
-My personal Emacs config. 
+My personal Emacs config.
 Some of the stuff pasted from [[https://github.com/hrs/dotfiles][this repository]]
 
 * Set personal information
@@ -42,7 +42,7 @@ Here add all the packages you want install
 ; activate all the packages (in particular autoloads)
 (package-initialize)
 
-; fetch the list of packages available 
+; fetch the list of packages available
 (unless package-archive-contents
   (package-refresh-contents))
 
@@ -82,7 +82,7 @@ Here add all the packages you want install
 * Programming customizations
 ** GoLang
 
-#+BEGIN_SRC golang
+#+BEGIN_SRC emacs-lisp
 (require 'go-autocomplete)
 (require 'auto-complete-config)
 (ac-config-default)
@@ -119,6 +119,12 @@ Indent 2 spaces.
    (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
    (add-to-list 'auto-mode-alist '("\\.html\\.twig\\'" . web-mode))
    (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+#+END_SRC
+
+* Sound config
+
+#+BEGIN_SRC emacs-lisp
+(setq visible-bell t)
 #+END_SRC
 
 * Org-mode
@@ -403,6 +409,3 @@ it.
  "Emacs server" (getenv "DESKTOP_AUTOSTART_ID"))
 
 #+END_SRC
-
-
-
