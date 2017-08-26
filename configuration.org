@@ -28,7 +28,7 @@ Here add all the packages you want install
   (setq package-list  '(python all-the-icons dracula-theme jedi helm helm-projectile
   	      pdf-tools less-css-mode emojify markdown-mode org-bullets auto-complete go-autocomplete
               go-mode web-mode less-css-mode neotree editorconfig powerline
-              dockerfile-mode ruby-mode php-mode scss-mode achievements))
+              dockerfile-mode ruby-mode php-mode scss-mode achievements pelican-mode))
 #+END_SRC
 
 * Package management
@@ -407,5 +407,13 @@ it.
   "/org/gnome/SessionManager"
   "org.gnome.SessionManager" "RegisterClient" 'my-register-signals
  "Emacs server" (getenv "DESKTOP_AUTOSTART_ID"))
+
+#+END_SRC
+* Pelican config
+
+#+BEGIN_SRC emacs-lisp
+
+  (require 'pelican-mode)
+  (pelican-global-mode)
 
 #+END_SRC
