@@ -28,6 +28,7 @@ Here add all the packages you want install
   (setq package-list  '(python all-the-icons dracula-theme jedi helm helm-projectile
   	      pdf-tools less-css-mode emojify markdown-mode org-bullets auto-complete go-autocomplete
               go-mode web-mode less-css-mode neotree editorconfig powerline
+              helm-ag ruby-electric rbenv chruby csv-mode make-mode
               dockerfile-mode ruby-mode php-mode scss-mode achievements pelican-mode))
 #+END_SRC
 
@@ -106,10 +107,13 @@ Indent 2 spaces.
 ** Ruby
 
 #+BEGIN_SRC emacs-lisp
-   (add-to-list 'auto-mode-alist
-       '("\\.\\(?:cap\\|gemspec\\|irbrc\\|gemrc\\|rake\\|rb\\|ru\\|thor\\)\\'" . ruby-mode))
-   (add-to-list 'auto-mode-alist
-       '("\\(?:Brewfile\\|Capfile\\|Gemfile\\(?:\\.[a-zA-Z0-9._-]+\\)?\\|[rR]akefile\\)\\'" . ruby-mode))
+(add-to-list 'auto-mode-alist
+             '("\\.\\(?:cap\\|gemspec\\|irbrc\\|gemrc\\|rake\\|rb\\|ru\\|thor\\)\\'" . ruby-mode))
+(add-to-list 'auto-mode-alist
+             '("\\(?:Brewfile\\|Capfile\\|Gemfile\\(?:\\.[a-zA-Z0-9._-]+\\)?\\|[rR]akefile\\)\\'" . ruby-mode))  
+
+(global-rbenv-mode)
+(rbenv-use-global)
 #+END_SRC
 
 ** Web
