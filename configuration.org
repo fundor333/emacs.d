@@ -26,7 +26,8 @@ Here add all the packages you want install
 
 #+BEGIN_SRC emacs-lisp
   (setq package-list  '(python all-the-icons dracula-theme jedi helm helm-projectile
-  	      pdf-tools less-css-mode emojify markdown-mode org-bullets auto-complete go-autocomplete
+  	      pdf-tools less-css-mode emojify markdown-mode 
+              edit-indirect org-bullets auto-complete go-autocomplete
               go-mode web-mode less-css-mode neotree editorconfig powerline
               helm-ag ruby-electric rbenv chruby csv-mode make-mode
               dockerfile-mode ruby-mode php-mode scss-mode achievements pelican-mode))
@@ -36,6 +37,7 @@ Here add all the packages you want install
 
 #+BEGIN_SRC emacs-lisp
 (setq package-archives '(("elpa" . "http://tromey.com/elpa/")
+                         ("melpa-stable" . "https://stable.melpa.org/packages/")
                          ("melpa" . "http://melpa.org/packages/")
                          ("gnu" . "http://elpa.gnu.org/packages/")
                          ("marmalade" . "http://marmalade-repo.org/packages/")))
@@ -59,6 +61,7 @@ Here add all the packages you want install
 
 #+BEGIN_SRC emacs-lisp
 (add-hook 'after-init-hook #'global-emojify-mode)
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 #+END_SRC
 
 * Adding Startup Stuff
@@ -81,6 +84,11 @@ Here add all the packages you want install
 #+END_SRC
 
 * Programming customizations
+** Editor Config
+#+BEGIN_SRC emacs-lisp
+(require 'editorconfig)
+(editorconfig-mode 1)
+#+END_SRC
 ** GoLang
 
 #+BEGIN_SRC emacs-lisp
