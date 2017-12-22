@@ -26,7 +26,7 @@ Here add all the packages you want install
 
 #+BEGIN_SRC emacs-lisp
   (setq package-list  '(python all-the-icons dracula-theme jedi helm helm-projectile
-  	      pdf-tools less-css-mode emojify markdown-mode 
+  	      pdf-tools less-css-mode emojify markdown-mode yaml-mode
               edit-indirect org-bullets auto-complete go-autocomplete
               go-mode web-mode less-css-mode neotree editorconfig powerline
               helm-ag ruby-electric rbenv chruby csv-mode make-mode
