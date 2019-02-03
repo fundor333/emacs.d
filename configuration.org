@@ -7,7 +7,7 @@ Some of the stuff pasted from [[https://github.com/hrs/dotfiles][this repository
 
 #+BEGIN_SRC emacs-lisp
   (setq user-full-name "Matteo Scarpa"
-        user-mail-address "fundor333@gmail.com"
+        user-mail-address "fundor333@fundor333.com"
         calendar-latitude 43.4
         calendar-longitude 12.3
         calendar-location-name "Venice, IT")
